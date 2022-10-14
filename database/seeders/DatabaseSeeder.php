@@ -13,7 +13,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        //<!------  lesson-01-measuring-your-database-performance ----->
+
         \App\Models\Company::factory(100)->create()->each(fn ($company) => $company->users()
             ->createMany(\App\Models\User::factory(50)->make()->map->getAttributes()));
+
+        // <!---------- lesson-02-minimizing-memory-usage ---->
+
+        \App\Models\User::factory(20)->create()
+            ->each(function ($user) {
+                if (!\App\Models\User::find($user->email))
+                    $user->posts()->createMany(\App\Models\Post::factory(5)->make()->toArray());
+            });
+
     }
 }
