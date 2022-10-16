@@ -19,5 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'UserController@index');
 Route::get('/login', 'UserController@logins');
+Route::get('/feature', 'FeatureContrroller@index');
+
+
 
 Route::get('/posts', 'PostController@index');
