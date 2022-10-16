@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('email_normalized')->virtualAs("regexp_replace(name, '[^A-Za-z0-9]', '')")->index();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('is_owner')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

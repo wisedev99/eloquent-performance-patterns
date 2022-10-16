@@ -17,6 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         //<!------  lesson-01-measuring-your-database-performance ----->
 
+        \App\Models\User::factory()->create(['name' => 'Ted Bossman', 'is_owner' => true]);
+        \App\Models\User::factory()->create(['name' => 'Sarah Seller']);
+        \App\Models\User::factory()->create(['name' => 'Chase Indeals']);
+
         \App\Models\Company::factory(50)->create()->each(fn ($company) => $company->users()
             ->createMany(\App\Models\User::factory(25)->make()->map->getAttributes()));
 
@@ -27,6 +31,7 @@ class DatabaseSeeder extends Seeder
                 // if (!\App\Models\User::find($user->email))
                 $user->logins()->createMany(\App\Models\Login::factory(5)->make()->toArray());
                 $user->posts()->createMany(\App\Models\Post::factory(5)->make()->toArray());
+                $user->customer()->createMany(\App\Models\Customer::factory(25)->make()->toArray());
             });
 
         //// 05
