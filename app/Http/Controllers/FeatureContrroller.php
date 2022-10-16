@@ -29,4 +29,11 @@ class FeatureContrroller extends Controller
         ]);
     }
 
+    public function show(Feature $feature)
+    {
+        $feature->load('comments.user');
+        $feature->comments->each->setRelation('feature', $feature);
+
+        return view('feature', ['feature' => $feature]);
+    }
 }
