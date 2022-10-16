@@ -38,6 +38,10 @@
                                     class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Company
                                 </th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    last login
+                                </th>
                                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
                             </tr>
                         </thead>
@@ -55,6 +59,14 @@
                                     <td
                                         class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
                                         {{ $user->company->name }}
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                        <span>{{ \Carbon\Carbon::parse($user->last_login)->diffForHumans() }}
+                                            <p>({{ $user->last_login_ip_address }})
+                                            </p>
+
+                                        </span>
                                     </td>
                                     <td
                                         class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">

@@ -14,4 +14,16 @@ class UserController extends Controller
             ->simplePaginate();
         return view('users', ['users' => $users]);
     }
+
+    public function logins()
+    {
+
+        $users = User::query()
+            ->WithLastLoginAt()
+            ->WithLastLoginIpAdress()
+            ->orderBy('name')
+            ->paginate();
+
+        return view('users', ['users' => $users]);
+    }
 }

@@ -20,11 +20,17 @@ class DatabaseSeeder extends Seeder
 
         // <!---------- lesson-02-minimizing-memory-usage ---->
 
-        \App\Models\User::factory(20)->create()
-            ->each(function ($user) {
-                if (!\App\Models\User::find($user->email))
-                    $user->posts()->createMany(\App\Models\Post::factory(5)->make()->toArray());
-            });
+        // \App\Models\User::factory(20)->create()
+        //     ->each(function ($user) {
+        //         if (!\App\Models\User::find($user->email))
+        //             $user->posts()->createMany(\App\Models\Post::factory(5)->make()->toArray());
+        //     });
 
+        \App\Models\User::all()
+            ->each(function ($user) {
+                // if (!\App\Models\User::find($user->email))
+                $user->logins()->createMany(\App\Models\Login::factory(5)->make()->toArray());
+                $user->posts()->createMany(\App\Models\Post::factory(5)->make()->toArray());
+            });
     }
 }

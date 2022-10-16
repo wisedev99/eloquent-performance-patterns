@@ -51,4 +51,44 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class, 'author_id');
     }
+    public function logins()
+    {
+        return $this->hasMany(Login::class);
+    }
+
+
+    public function lastLogin()
+    {
+        // return $this->hasOne(Login::class)->latest();
+        return $this->belongsTo(Login::class);
+    }
+
+    public function scopeWithLastLogin($query)
+    {
+        $query->addSelect(['last_login_id', Login::select('id')
+            ->whereColumn('user_id', 'users.id')
+            ->latest()
+            ->take(1)])->with('lastLogin');
+    }
+
+
+
+    public function scopeWithLastLoginAt($query)
+    {
+        $query->addSelect([
+            'last_login' => Login::select('created_at')
+                ->whereColumn('user_id', 'users.id')
+                ->latest()
+                ->take(1)
+        ])->withCasts(['last_login_at' => 'datetime']);
+    }
+    public function scopeWithLastLoginIpAdress($query)
+    {
+        $query->addSelect([
+            'last_login_ip_address' => Login::select('ip_address')
+                ->whereColumn('user_id', 'users.id')
+                ->latest()
+                ->take(1)
+        ]);
+    }
 }

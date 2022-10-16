@@ -18,5 +18,6 @@ use Illuminate\Support\Facades\Route;
 // Auth::routes();
 
 Route::get('/', 'UserController@index');
+Route::get('/login', 'UserController@logins');
 
 Route::get('/posts', 'PostController@index');
