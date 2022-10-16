@@ -101,7 +101,9 @@ class User extends Authenticatable
                 $query->where('name', 'like', $term)
                     ->orWhere('email', 'like', $term)
                     ->orwhereHas('company', function ($query) use ($term) {
-                        $query->where('name', 'like', $term);
+                        // $query->where('name', 'like', $term);
+                        $query->select('id')->from('companies')
+                            ->where('name', 'like', $term);
                     });
             });
         });
