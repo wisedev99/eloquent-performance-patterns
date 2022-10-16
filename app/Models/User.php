@@ -82,6 +82,7 @@ class User extends Authenticatable
                 ->take(1)
         ])->withCasts(['last_login_at' => 'datetime']);
     }
+
     public function scopeWithLastLoginIpAdress($query)
     {
         $query->addSelect([
@@ -90,5 +91,19 @@ class User extends Authenticatable
                 ->latest()
                 ->take(1)
         ]);
+    }
+
+    public function scopeSearch($query, $terms = null)
+    {
+        collect(explode(' ', $terms))->filter()->each(function ($term) use ($query) {
+            $term = '%' . $term . '%';
+            $query->where(function ($query) use ($term) {
+                $query->where('name', 'like', $term)
+                    ->orWhere('email', 'like', $term)
+                    ->orwhereHas('company', function ($query) use ($term) {
+                        $query->where('name', 'like', $term);
+                    });
+            });
+        });
     }
 }
