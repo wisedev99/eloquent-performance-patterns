@@ -71,7 +71,7 @@
                                     </td>
                                     <td
                                         class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                        {{ $user->company->name }}
+                                        {{ $user->company ? $user->company->name : '' }}
                                     </td>
                                     <td
                                         class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
