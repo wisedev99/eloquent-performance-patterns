@@ -30,6 +30,10 @@
                                 class="ml-4 px-3 py-2 rounded-md
                                  text-sm font-medium text-gray-300 hover:text-white hover:bg-gr
                                  ay-700 focus:outline-none focus:text-white focus:bg-gray-700">Features</a>
+                            <a href="/costumers"
+                                class="ml-4 px-3 py-2 rounded-md
+                                 text-sm font-medium text-gray-300 hover:text-white hover:bg-gr
+                                 ay-700 focus:outline-none focus:text-white focus:bg-gray-700">Costumers</a>
                         </div>
                     </div>
                 </div>
