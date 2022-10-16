@@ -99,17 +99,14 @@ class User extends Authenticatable
             $term = '%' . $term . '%';
             $query->where(function ($query) use ($term) {
                 $query->where('name', 'like', $term)
-                    ->orWhere('email', 'like', $term)
-                    ->orwhereHas(
-                        'company',
-                        Company::query()
-                            ->where('name', 'like', $term)
-                            ->pluck('id')
-                        // $query->where('name', 'like', $term);
-                        // $query->select('id')->from('companies')
-                        //     ->where('name', 'like', $term);
+                    ->orWhere('email', 'like', $term)->union(
+                        $query->newQuery()
+                            ->select('users.id')
+                            ->from('users')
+                            ->join('companies', 'companies.id', '=', 'users.company_id')
+                            ->where('companies.name', 'like', $term)
                     );
-            });
+            }, 'matches');
         });
     }
 }
