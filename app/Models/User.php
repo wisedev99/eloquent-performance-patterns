@@ -96,20 +96,22 @@ class User extends Authenticatable
     public function scopeSearch($query, $terms = null)
     {
         collect(str_getcsv($terms, ' ', '"'))->filter()->each(function ($term) use ($query) {
-            $term = '%' . $term . '%';
+            $term = preg_replace('/[^A-Za-z0-9]/', '', $term) . '%';
             $query->whereIn('id', function ($query) use ($term) {
                 $query->select('id')
                     ->from(function ($query) use ($term) {
                         $query->select('id')
                             ->from('users')
-                            ->where('name', 'like', $term)
-                            ->orWhere('email', 'like', $term)
+                            ->where('name_normalized', 'like', $term)
+                            ->orWhere('email_normalized', 'like', $term)
+                            // ->whereRaw("regexp_replace(name, '[^A-Za-z0-9]', '')  like ?", [$term])
+                            // ->orWhereRaw("regexp_replace(email, '[^A-Za-z0-9]', '')  like ?", [$term])
                             ->union(
                                 $query->newQuery()
                                     ->select('users.id')
                                     ->from('users')
                                     ->join('companies', 'companies.id', '=', 'users.company_id')
-                                    ->where('companies.name', 'like', $term)
+                                    ->where('companies.name_normalized', 'like', $term)
                             );
                     }, 'matches');
             });
